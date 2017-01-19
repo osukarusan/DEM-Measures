@@ -155,20 +155,7 @@ float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pI
         }
     }
 
-    /*
-    float dIso = glm::distance(gridMin, gridMax) + 1;
-    for (int i = 0; i < gridSize.x; i++) {
-        for (int j = 0; j < gridSize.y; j++) {
-            glm::vec2 pij = gridMin + glm::vec2(i + 0.5f, j + 0.5f)*gridRes;
-            float d = glm::distance(pij, p);
-            float h = grid[i][j];
-            if (h > ph && d >= minDist && d < dIso) {
-                pIso = glm::vec3(pij.x, pij.y, h);
-                dIso = d;
-            }
-        }
-    }
-    */
-
-    return glm::distance(p, glm::vec2(pIso));
+    float dres = glm::distance(p, glm::vec2(pIso));
+    if (dres > minDist) return dres;
+    else                return -1;
 }

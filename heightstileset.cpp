@@ -42,14 +42,25 @@ std::vector<std::vector<float> > HeightsTileset::readTile(int ti, int tj, const 
     std::string tilePath = oss.str();
 
     unsigned int sx, sy;
+    bool loadError = false;
     std::fstream fin(tilePath, std::fstream::in | std::fstream::binary);
-    fin.read((char*)(&sx), sizeof(unsigned int));
-    fin.read((char*)(&sy), sizeof(unsigned int));
-    fin.read((char*)(loadBuffer), sx*sy*sizeof(float));
-    fin.close();
+    if (fin.good()) {
+        fin.read((char*)(&sx), sizeof(unsigned int));
+        fin.read((char*)(&sy), sizeof(unsigned int));
+        fin.read((char*)(loadBuffer), sx*sy*sizeof(float));
+        fin.close();
+    }
+    else {
+        sx = int(glm::round(tileExtension.x/tileRes.x));
+        sy = int(glm::round(tileExtension.y/tileRes.y));
+        loadError = true;
+    }
 
     glm::ivec2 osize = glm::ivec2(sx, sy)/outFactor;
     std::vector<std::vector<float> > H(osize.x, std::vector<float>(osize.y, hNoValue));
+
+    if (loadError) return H;
+
     for (int i = 0; i < osize.x; i++) {
         for (int j = 0; j < osize.y; j++) {
             float sumH = 0;
@@ -82,12 +93,14 @@ std::vector<std::vector<float> > HeightsTileset::readTile(int ti, int tj, const 
 
 HeightsGrid* HeightsTileset::loadRegion(const glm::vec2& dtmMin, const glm::vec2& dtmMax, const glm::vec2& outRes)
 {
+    glm::vec2 regionMin = dtmMin;//glm::max(dtmMin, tsetMin);
+    glm::vec2 regionMax = dtmMax;//glm::min(dtmMax, tsetMax);
     glm::vec2  tileExtension = glm::vec2(ppTile)*tileRes;
-    glm::ivec2 tileIni = glm::ivec2((dtmMin - tsetMin)/tileExtension);
-    glm::ivec2 tileEnd = glm::ivec2((dtmMax - tsetMin)/tileExtension);
+    glm::ivec2 tileIni = glm::ivec2((regionMin - tsetMin)/tileExtension);
+    glm::ivec2 tileEnd = glm::ivec2((regionMax - tsetMin)/tileExtension);
 
     glm::ivec2 reduceFactor = glm::ivec2(glm::round(outRes/tileRes));
-    glm::ivec2 numPoints = glm::ivec2(glm::ceil((dtmMax - dtmMin)/outRes));
+    glm::ivec2 numPoints = glm::ivec2(glm::ceil((regionMax - regionMin)/outRes));
     glm::ivec2 outPPtile = ppTile/reduceFactor;
 
     std::vector<std::vector<float> > H(numPoints.x+1, std::vector<float>(numPoints.y+1, hNoValue));
@@ -101,8 +114,8 @@ HeightsGrid* HeightsTileset::loadRegion(const glm::vec2& dtmMin, const glm::vec2
             for (int ii = 0; ii < outPPtile.x; ii++) {
                 for (int jj = 0; jj < outPPtile.y; jj++) {
                     glm::vec2 p = tmin + glm::vec2(float(ii), float(jj))*outRes;
-                    if (p.x >= dtmMin.x && p.x <= dtmMax.x && p.y >= dtmMin.y && p.y <= dtmMax.y) {
-                        glm::ivec2 coords = glm::ivec2(glm::floor((p - dtmMin)/outRes));
+                    if (p.x >= regionMin.x && p.x <= regionMax.x && p.y >= regionMin.y && p.y <= regionMax.y) {
+                        glm::ivec2 coords = glm::ivec2(glm::floor((p - regionMin)/outRes));
                         glm::clamp(coords, glm::ivec2(0,0), glm::ivec2(numPoints.x, numPoints.y));
                         H[coords.x][coords.y] = T[outPPtile.y - 1 - jj][ii];
                     }
@@ -111,6 +124,6 @@ HeightsGrid* HeightsTileset::loadRegion(const glm::vec2& dtmMin, const glm::vec2
         }
     }
 
-    HeightsGrid* grid = new HeightsGrid(H, dtmMin, dtmMax, outRes, hNoValue);
+    HeightsGrid* grid = new HeightsGrid(H, regionMin, regionMax, outRes, hNoValue);
     return grid;
 }

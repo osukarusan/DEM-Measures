@@ -871,7 +871,7 @@
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="labelQstatsRadius">
+              <widget class="QLabel" name="labelQstatsRad">
                <property name="text">
                 <string>Radi</string>
                </property>
@@ -910,7 +910,7 @@
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QLabel" name="labelQstatsRadius_2">
+              <widget class="QLabel" name="labelQstatsRadMin">
                <property name="text">
                 <string>Area cim</string>
                </property>
@@ -945,6 +945,45 @@
               <widget class="QLabel" name="labelAuxM_20">
                <property name="text">
                 <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="labelQstatsMaxGrid">
+               <property name="text">
+                <string>Aïllament</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDoubleSpinBox" name="queryStatsMaxGrid">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>1.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>200.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>5.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>5.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="labelAuxM_21">
+               <property name="text">
+                <string>km</string>
                </property>
               </widget>
              </item>

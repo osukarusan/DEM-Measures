@@ -17,6 +17,7 @@ public:
     glm::vec2  getGridRes() const;
     glm::vec2  getGridExtension() const;
     glm::ivec2 getGridSize() const;
+    float      getGridNoValue() const;
 
     const std::vector<std::vector<float> >& data() const;
 
@@ -54,6 +55,10 @@ inline glm::vec2 HeightsGrid::getGridExtension() const {
 
 inline glm::ivec2 HeightsGrid::getGridSize() const {
     return gridSize;
+}
+
+inline float HeightsGrid::getGridNoValue() const {
+    return gridNoValue;
 }
 
 inline const std::vector<std::vector<float> >& HeightsGrid::data() const {

@@ -92,18 +92,19 @@ void MainWindow::saveGridELV()
         this->ui->statusBar->showMessage("Desant ELV...");
         std::ofstream fout(filename.toStdString(), std::fstream::out | std::fstream::trunc | std::fstream::binary);
 
-        write_long(fout, 151375);
-        write_long(fout, 151375 + gridPoints.y - 1);
-        write_long(fout, 8570);
-        write_long(fout, 8570 + gridPoints.x - 1);
-        write_short(fout, -1600);
-        write_long(fout, 0);
-        write_long(fout, 0);
-        write_long(fout, 2);
-        write_long(fout, 1);
-        write_long(fout, 1);
+        write_long(fout, grid->getGridMin().y);                     // min lat
+        write_long(fout, grid->getGridMin().y + gridPoints.y - 1);  // max lat
+        write_long(fout, grid->getGridMin().x);                     // min lon
+        write_long(fout, grid->getGridMin().x + gridPoints.x - 1);  // max lon
+        write_short(fout, grid->getGridNoValue());                  // default
+        write_long(fout, 0);    // xdim, ydim
+        write_long(fout, 0);    // winprom throws error if they are not both 0
+        write_long(fout, 2);    // WinProm assumes equat grid (code 2)
+        write_long(fout, grid->getGridRes().y);     // lat_step
+        write_long(fout, grid->getGridRes().x);     // lon_step
         write_long(fout, gridPoints.y);
         write_long(fout, gridPoints.x);
+
         for (int y = 0; y < gridPoints.y; y++) {
             for (int x = 0; x < gridPoints.x; x++) {
                 write_short(fout, short(10*grid->data()[x][y] + 0.5));
@@ -178,8 +179,9 @@ void MainWindow::computeRadialStats()
     glm::vec2 p(float(ui->queryStatsX->value()), float(ui->queryStatsY->value()));
     float rad = float(ui->queryStatsRad->value());
     float refRadius = ui->queryStatsRadMin->value();
-    glm::vec2 pmin = p - glm::vec2(rad, rad);
-    glm::vec2 pmax = p + glm::vec2(rad, rad);
+    float gridRad = ui->queryStatsMaxGrid->value()*1000.0f;
+    glm::vec2 pmin = p - glm::vec2(gridRad, gridRad);
+    glm::vec2 pmax = p + glm::vec2(gridRad, gridRad);
 
     HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
 
@@ -247,6 +249,7 @@ void MainWindow::computeListStats()
                 float px, py;
                 iss >> px >> py;
 
+                // load the biggest area (last radius assuming they are ordered)
                 float rad = radii[NUM_RADII-1];
                 glm::vec2 p(px, py);
                 glm::vec2 pmin = p - glm::vec2(rad, rad);
