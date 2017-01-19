@@ -140,6 +140,8 @@ void TerrainViewer::paintGL()
     glUniform1f(program->uniformLocation("regionAlpha"), showingRegion ? 0.3f : 0.0f);
     glUniform2fv(program->uniformLocation("regionMin"), 1, &regionMin.x);
     glUniform2fv(program->uniformLocation("regionMax"), 1, &regionMax.x);
+    glUniform2fv(program->uniformLocation("selectedPoint"), 1, &selectedPoint.x);
+    glUniform1f(program->uniformLocation("pointSize"), glm::min(camRadius/10.0f, 5000.0f));
     glUniform1ui(program->uniformLocation("heightPalette"), 0);
     glUniform3fv(program->uniformLocation("lightDir"), 1, &lightDir.x);
     glUniform1f(program->uniformLocation("shadingFactor"), shadingEnabled ? 0.75f : 0);
@@ -276,6 +278,7 @@ void TerrainViewer::mouseReleaseEvent(QMouseEvent *e)
         glm::vec3 vmap = glm::unProject(vwin, camView, camProj, viewport);
         selectedPoint = glm::vec2(vmap.x, vmap.y);
         emit pointSelected();
+        update();
     }
 
     interaction = NONE;
