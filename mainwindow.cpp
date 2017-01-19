@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewY->setMinimum(gridMin.y);
     ui->viewY->setMaximum(gridMax.y);
     ui->viewRadius->setMaximum(glm::max(gridMax.x - gridMin.x, gridMax.y - gridMin.y));
+    ui->queryStatsX->setValue(0.5*(gridMin.x + gridMax.x));
+    ui->queryStatsY->setValue(0.5*(gridMin.y + gridMax.y));
 
     grid = nullptr;
     dirtyGrid = true;
@@ -290,6 +292,20 @@ void MainWindow::computeListStats()
             this->ui->statusBar->showMessage("Completat!", 5000);
         }
     }
+}
+
+void MainWindow::selectPoint()
+{
+    ui->buttonClickPoint->setEnabled(false);
+    ui->glWidget->doSelectPoint();
+}
+
+void MainWindow::pointSelected()
+{
+    ui->buttonClickPoint->setEnabled(true);
+    glm::vec2 p = ui->glWidget->getSelectedPoint();
+    ui->queryStatsX->setValue(p.x);
+    ui->queryStatsY->setValue(p.y);
 }
 
 void MainWindow::centerViewToRadialStats()

@@ -997,6 +997,13 @@
             </widget>
            </item>
            <item>
+            <widget class="QPushButton" name="buttonClickPoint">
+             <property name="text">
+              <string>Clicar a la vista</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="Line" name="line_2">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -1319,6 +1326,7 @@
     <signal>changedViewX(double)</signal>
     <signal>changedViewY(double)</signal>
     <signal>changedViewRadius(double)</signal>
+    <signal>pointSelected()</signal>
     <slot>setViewX(double)</slot>
     <slot>setViewY(double)</slot>
     <slot>setViewRadius(double)</slot>
@@ -1534,7 +1542,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1011</x>
-     <y>550</y>
+     <y>605</y>
     </hint>
     <hint type="destinationlabel">
      <x>874</x>
@@ -1550,7 +1558,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1011</x>
-     <y>612</y>
+     <y>667</y>
     </hint>
     <hint type="destinationlabel">
      <x>849</x>
@@ -1582,7 +1590,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1011</x>
-     <y>224</y>
+     <y>250</y>
     </hint>
     <hint type="destinationlabel">
      <x>846</x>
@@ -1830,6 +1838,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonClickPoint</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>933</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1037</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>glWidget</sender>
+   <signal>pointSelected()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pointSelected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>661</x>
+     <y>251</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1036</x>
+     <y>307</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>changedGridWidth(QString)</signal>
@@ -1850,5 +1890,7 @@
   <slot>computeRadialStats()</slot>
   <slot>computeListStats()</slot>
   <slot>centerViewToRadialStats()</slot>
+  <slot>selectPoint()</slot>
+  <slot>pointSelected()</slot>
  </slots>
 </ui>

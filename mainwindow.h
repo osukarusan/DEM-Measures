@@ -33,6 +33,8 @@ public slots:
     // queries
     void computeRadialStats();
     void computeListStats();
+    void selectPoint();
+    void pointSelected();
 
     // render
     void centerViewToRadialStats();

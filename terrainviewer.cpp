@@ -257,6 +257,7 @@ void TerrainViewer::mousePressEvent(QMouseEvent *e)
 {
     xClick = e->x();
     yClick = e->y();
+    if (interaction == SELECT) return;
     if (e->button()&Qt::LeftButton) {
         interaction = PAN;
     }
@@ -265,8 +266,18 @@ void TerrainViewer::mousePressEvent(QMouseEvent *e)
     }
 }
 
-void TerrainViewer::mouseReleaseEvent(QMouseEvent *)
+void TerrainViewer::mouseReleaseEvent(QMouseEvent *e)
 {
+    int mx = e->x();
+    int my = e->y();
+    if (interaction == SELECT) {
+        glm::vec3 vwin(mx + 0.5f, height() - my - 0.5f, 1.0f);
+        glm::vec4 viewport(0, 0, width(), height());
+        glm::vec3 vmap = glm::unProject(vwin, camView, camProj, viewport);
+        selectedPoint = glm::vec2(vmap.x, vmap.y);
+        emit pointSelected();
+    }
+
     interaction = NONE;
 }
 

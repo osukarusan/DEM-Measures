@@ -25,6 +25,8 @@ public:
 
     void showRegion(bool);
     void setSeaLevel(float);
+    void doSelectPoint();
+    glm::vec2 getSelectedPoint() const;
 
 public slots:
     void setViewX(double);
@@ -44,6 +46,7 @@ signals:
     void changedViewX(double);
     void changedViewY(double);
     void changedViewRadius(double);
+    void pointSelected();
 
 protected:
     virtual void initializeGL();
@@ -77,9 +80,10 @@ private:
     GLuint currPaletteTex;
     bool shadingEnabled;
 
-    typedef enum {NONE, ROTATE, PAN, ZOOM} InteractiveAction;
+    typedef enum {NONE, ROTATE, PAN, ZOOM, SELECT} InteractiveAction;
     InteractiveAction interaction;
     int xClick, yClick;
+    glm::vec2 selectedPoint;
 };
 
 inline void TerrainViewer::setRegion(const glm::vec2 &rmin, const glm::vec2 &rmax)
@@ -100,5 +104,16 @@ inline void TerrainViewer::setSeaLevel(float f)
     seaLevel = f;
     update();
 }
+
+inline void TerrainViewer::doSelectPoint()
+{
+    interaction = SELECT;
+}
+
+inline glm::vec2 TerrainViewer::getSelectedPoint() const
+{
+    return selectedPoint;
+}
+
 
 #endif // TERRAINVIEWER_H
