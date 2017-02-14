@@ -19,12 +19,16 @@ MainWindow::MainWindow(QWidget *parent) :
     gridRes = tileset->getTileRes();
     ui->elvXmin->setMinimum(gridMin.x);
     ui->elvXmin->setMaximum(gridMax.x);
+    ui->elvXmin->setValue(gridMin.x);
     ui->elvXmax->setMinimum(gridMin.x);
     ui->elvXmax->setMaximum(gridMax.x);
+    ui->elvXmax->setValue(gridMax.x);
     ui->elvYmin->setMinimum(gridMin.y);
     ui->elvYmin->setMaximum(gridMax.y);
+    ui->elvYmin->setValue(gridMin.y);
     ui->elvYmax->setMinimum(gridMin.y);
     ui->elvYmax->setMaximum(gridMax.y);
+    ui->elvYmax->setValue(gridMax.y);
     ui->elvResolution->setMinimum(glm::max(gridRes.x, gridRes.y));
     ui->elvResolution->setSingleStep(glm::max(gridRes.x, gridRes.y));
     emitUpdatedRegion();
@@ -125,6 +129,7 @@ void MainWindow::saveGridPLY()
     QString filename = QFileDialog::getSaveFileName(this, tr("Desar model 3D"), QString(), tr("PLY (*.ply)"));
     if (!filename.isEmpty()) {
         ui->tabWidget->setEnabled(false);
+
         checkGrid();
 
         this->ui->statusBar->showMessage("Construint model...");
@@ -214,7 +219,7 @@ void MainWindow::computeRadialStats()
 
 void MainWindow::computeListStats()
 {
-    unsigned int NUM_RADII = 5;
+    const unsigned int NUM_RADII = 5;
     const float radii[NUM_RADII] = {100, 200, 1000, 5000, 25000};
     float refRadius = ui->queryStatsRadMin->value();
 

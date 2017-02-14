@@ -14,6 +14,8 @@ QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
 
 INCLUDEPATH += ./glm/
 
+DEFINES += _USE_MATH_DEFINES
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     terrainviewer.cpp \

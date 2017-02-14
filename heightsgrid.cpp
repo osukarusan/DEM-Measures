@@ -28,7 +28,7 @@ void HeightsGrid::buildTriangleModel(std::vector<glm::vec3> &verts, std::vector<
         for (int y = 0; y < gridSize.y; y++) {
             if (grid[x][y] > gridNoValue) {
                 glm::vec3 p(x*gridRes.x + gridMin.x, y*gridRes.y + gridMin.y, grid[x][y]);
-                vtxId[x][y] = verts.size();
+                vtxId[x][y] = int(verts.size());
                 verts.push_back(p);
             }
         }
@@ -144,14 +144,14 @@ float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pI
                 break;
             }
 
-            Q.push(std::make_pair(pd - std::sqrt(2.0),  std::make_pair(pcx - 1, pcy - 1)));
+            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx - 1, pcy - 1)));
             Q.push(std::make_pair(pd - 1,               std::make_pair(pcx - 1, pcy    )));
-            Q.push(std::make_pair(pd - std::sqrt(2.0),  std::make_pair(pcx - 1, pcy + 1)));
+            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx - 1, pcy + 1)));
             Q.push(std::make_pair(pd - 1,               std::make_pair(pcx,     pcy - 1)));
             Q.push(std::make_pair(pd - 1,               std::make_pair(pcx,     pcy + 1)));
-            Q.push(std::make_pair(pd - std::sqrt(2.0),  std::make_pair(pcx + 1, pcy - 1)));
+            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx + 1, pcy - 1)));
             Q.push(std::make_pair(pd - 1,               std::make_pair(pcx + 1, pcy    )));
-            Q.push(std::make_pair(pd - std::sqrt(2.0),  std::make_pair(pcx + 1, pcy + 1)));
+            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx + 1, pcy + 1)));
         }
     }
 

@@ -50,8 +50,8 @@ void TerrainViewer::loadTerrain(const std::string &path)
     camRadius = glm::round(glm::max(boxMax.x - camCtr.x, boxMax.y - camCtr.y)/1000.0f)*1000.0f;
     camDist = 2*boxMax.z;
 
-    numPoints = verts.size();
-    numTriangles = tris.size();
+    numPoints = static_cast<unsigned int>(verts.size());
+    numTriangles = static_cast<unsigned int>(tris.size());
 
     program->bind();
     dtmVAO->bind();
@@ -237,7 +237,7 @@ void TerrainViewer::enableShading(bool b)
 
 void TerrainViewer::setShadingAngle(int v)
 {
-    const float altitude = M_PI/3;
+    const float altitude = float(M_PI/3);
     float azimuth = M_PI*float(v - 90)/180.0f;
     lightDir = glm::vec3(glm::cos(azimuth)*glm::cos(altitude),
                          glm::sin(azimuth)*glm::cos(altitude),
