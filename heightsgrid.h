@@ -26,7 +26,9 @@ public:
     float getHeightMin();
     float getHeightMax();
     void getRadialStatistics(const glm::vec2& p, float rad, glm::vec3& hmin, glm::vec3& hmax, float& hmean, float& hdev) const;
+    void getRadialStatistics(const glm::vec3& p, float rad, glm::vec3& hmin, glm::vec3& hmax, float& hmean, float& hdev) const;
     float getIsolation(const glm::vec2& p, float minDist, glm::vec3& pIso);
+    float getIsolation(const glm::vec3& p, float minDist, glm::vec3& pIso);
 
 private:
     std::vector<std::vector<float> > grid;

@@ -88,20 +88,28 @@ float HeightsGrid::getHeightMax() {
 
 void HeightsGrid::getRadialStatistics(const glm::vec2 &p, float rad, glm::vec3 &hmin, glm::vec3 &hmax, float &hmean, float &hdev) const
 {
+    glm::ivec2 pcoords = glm::ivec2((p - gridMin)/gridRes);
+    float ph = grid[pcoords.x][pcoords.y];
+    return getRadialStatistics(glm::vec3(p.x, p.y, ph), rad, hmin, hmax, hmean, hdev);
+}
+
+void HeightsGrid::getRadialStatistics(const glm::vec3 &p, float rad, glm::vec3 &hmin, glm::vec3 &hmax, float &hmean, float &hdev) const
+{
     float hsum = 0;
     float ssum = 0;
     int N = 0;
 
-    glm::ivec2 pcoords = glm::ivec2((p - gridMin)/gridRes);
+    glm::vec2 p_xy = glm::vec2(p);
+    glm::ivec2 pcoords = glm::ivec2((p_xy - gridMin)/gridRes);
     glm::ivec2 radOff = glm::ivec2(glm::ceil(glm::vec2(rad)/gridRes));
     glm::ivec2 ijMin = glm::max(pcoords - radOff, glm::ivec2(0));
     glm::ivec2 ijMax = glm::min(pcoords + radOff, gridSize);
-    hmin = hmax = glm::vec3(p.x, p.y, grid[pcoords.x][pcoords.y]);
+    hmin = hmax = p;
 
     for (int i = ijMin.x; i < ijMax.x; i++) {
         for (int j = ijMin.x; j < ijMax.y; j++) {
             glm::vec2 pij = gridMin + glm::vec2(i + 0.5f, j + 0.5f)*gridRes;
-            if (glm::distance(pij, p) <= rad && grid[i][j] >= 0) {
+            if (glm::distance(pij, p_xy) <= rad && grid[i][j] >= 0) {
                 float h = grid[i][j];
                 if (h < hmin.z) {
                     hmin = glm::vec3(gridMin.x + i*gridRes.x, gridMin.y + j*gridRes.y, h);
@@ -124,7 +132,15 @@ float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pI
 {
     glm::ivec2 pcoords = glm::ivec2((p - gridMin)/gridRes);
     float ph = grid[pcoords.x][pcoords.y];
-    pIso = glm::vec3(p.x, p.y, ph);
+    return getIsolation(glm::vec3(p.x, p.y, ph), minDist, pIso);
+}
+
+float HeightsGrid::getIsolation(const glm::vec3 &p, float minDist, glm::vec3 &pIso)
+{
+    glm::vec2 p_xy = glm::vec2(p);
+    glm::ivec2 pcoords = glm::ivec2((p_xy - gridMin)/gridRes);
+    float ph = p.z;
+    pIso = p;
 
     std::priority_queue<std::pair<float, std::pair<int,int> > > Q;
     std::vector<std::vector<bool> > Visited(gridSize.x, std::vector<bool>(gridSize.y, false));
@@ -137,7 +153,7 @@ float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pI
         if (pcx >= 0 && pcy >= 0 && pcx < gridSize.x && pcy < gridSize.y && !Visited[pcx][pcy]) {
             Visited[pcx][pcy] = true;
             glm::vec2 pij = gridMin + glm::vec2(pcx + 0.5f, pcy + 0.5f)*gridRes;
-            float d = glm::distance(pij, p);
+            float d = glm::distance(pij, p_xy);
             float h = grid[pcx][pcy];
             if (h > ph && d >= minDist) {
                 pIso = glm::vec3(pij.x, pij.y, h);
@@ -155,7 +171,7 @@ float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pI
         }
     }
 
-    float dres = glm::distance(p, glm::vec2(pIso));
+    float dres = glm::distance(p_xy, glm::vec2(pIso));
     if (dres > minDist) return dres;
     else                return -1;
 }

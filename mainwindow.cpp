@@ -222,6 +222,7 @@ void MainWindow::computeListStats()
     const unsigned int NUM_RADII = 5;
     const float radii[NUM_RADII] = {100, 200, 1000, 5000, 25000};
     float refRadius = ui->queryStatsRadMin->value();
+    bool givenHeights = ui->checkListWithHeights->isChecked();
 
     QString infile = QFileDialog::getOpenFileName(this, tr("Obrir llistat de punts"), QString(), tr("TXT (*.txt)"));
     if (!infile.isEmpty()) {
@@ -253,8 +254,9 @@ void MainWindow::computeListStats()
                 this->ui->statusBar->showMessage("Processant punt #" + QString::number(pnum) + "...");
 
                 std::istringstream iss(line);
-                float px, py;
+                float px, py, pz;
                 iss >> px >> py;
+                if (givenHeights) iss >> pz;
 
                 // load the biggest area (last radius assuming they are ordered)
                 float rad = radii[NUM_RADII-1];
@@ -263,11 +265,19 @@ void MainWindow::computeListStats()
                 glm::vec2 pmax = p + glm::vec2(rad, rad);
                 HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
 
-                // get reference point
+                // variables
                 glm::vec3 hmin, hmax;
+                glm::vec3 pref;
                 float hmean, hdev;
-                gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
-                glm::vec3 pref = hmax;
+
+                // get reference point
+                if (givenHeights) {
+                    pref = glm::vec3(px, py, pz);
+                }
+                else {
+                    gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
+                    pref = hmax;
+                }
                 fout << px << ", ";
                 fout << py << ", ";
                 fout << pref.x << ", ";
@@ -276,7 +286,7 @@ void MainWindow::computeListStats()
 
                 // get radial queries
                 for (unsigned int ri = 0; ri < NUM_RADII; ri++) {
-                    gridArea->getRadialStatistics(glm::vec2(pref), radii[ri], hmin, hmax, hmean, hdev);
+                    gridArea->getRadialStatistics(pref, radii[ri], hmin, hmax, hmean, hdev);
                     fout << hmean << ", ";
                     fout << hmin.z << ", ";
                     fout << hmax.z << ", ";
@@ -284,7 +294,7 @@ void MainWindow::computeListStats()
 
                 // get isolation
                 glm::vec3 pIso;
-                float isolation = gridArea->getIsolation(glm::vec2(pref), refRadius, pIso);
+                float isolation = gridArea->getIsolation(pref, refRadius, pIso);
                 fout << isolation << std::endl;
 
                 delete gridArea;

@@ -86,7 +86,7 @@ void TerrainViewer::initializeGL()
     dtmVAO = new QOpenGLVertexArrayObject(this);
     dtmVAO->create();
 
-    loadTerrain("data/cat200.ply");
+    loadTerrain("data/dem.ply");
 
     QImage imgPal = QImage("data/palette.png");
     glGenTextures(1, &texPaletteColor);

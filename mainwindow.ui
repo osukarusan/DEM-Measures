@@ -792,6 +792,13 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="gridLayout_6">
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelQstatsY">
+               <property name="text">
+                <string>N (Y)</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="labelQstatsX">
                <property name="text">
@@ -824,20 +831,6 @@
                </property>
                <property name="singleStep">
                 <double>1000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="labelAuxM_6">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="labelQstatsY">
-               <property name="text">
-                <string>N (Y)</string>
                </property>
               </widget>
              </item>
@@ -877,6 +870,20 @@
                </property>
               </widget>
              </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="labelAuxM_6">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="labelAuxM_20">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="1">
               <widget class="QDoubleSpinBox" name="queryStatsRad">
                <property name="alignment">
@@ -902,17 +909,17 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="labelAuxM_8">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
              <item row="3" column="0">
               <widget class="QLabel" name="labelQstatsRadMin">
                <property name="text">
-                <string>Area cim</string>
+                <string>Àrea cim</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="labelAuxM_21">
+               <property name="text">
+                <string>km</string>
                </property>
               </widget>
              </item>
@@ -941,17 +948,10 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="labelAuxM_20">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
              <item row="4" column="0">
               <widget class="QLabel" name="labelQstatsMaxGrid">
                <property name="text">
-                <string>Aïllament</string>
+                <string>Àrea cerca</string>
                </property>
               </widget>
              </item>
@@ -980,10 +980,10 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="labelAuxM_21">
+             <item row="2" column="2">
+              <widget class="QLabel" name="labelAuxM_8">
                <property name="text">
-                <string>km</string>
+                <string>m</string>
                </property>
               </widget>
              </item>
@@ -992,14 +992,14 @@
            <item>
             <widget class="QPushButton" name="buttonCenterView">
              <property name="text">
-              <string>Centrar vista</string>
+              <string>Centrar vista al punt</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="buttonClickPoint">
              <property name="text">
-              <string>Clicar a la vista</string>
+              <string>Seleccionar sobre la vista</string>
              </property>
             </widget>
            </item>
@@ -1268,6 +1268,13 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
+            <widget class="QCheckBox" name="checkListWithHeights">
+             <property name="text">
+              <string>Llistat amb alçades</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="buttonCalcListStats">
              <property name="text">
               <string>Carregar llistat...</string>
@@ -1342,262 +1349,6 @@
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>elvXmin</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setGridXmin(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>997</x>
-     <y>138</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>854</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>elvXmax</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setGridXmax(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>997</x>
-     <y>223</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>858</x>
-     <y>194</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>elvYmin</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setGridYmin(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>997</x>
-     <y>164</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>881</x>
-     <y>134</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>elvYmax</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setGridYmax(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>997</x>
-     <y>249</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>877</x>
-     <y>218</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>elvResolution</sender>
-   <signal>valueChanged(double)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setGridResolution(double)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>997</x>
-     <y>308</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>852</x>
-     <y>278</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonSaveELV</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveGridELV()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1021</x>
-     <y>635</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>861</x>
-     <y>595</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonSavePLY</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveGridPLY()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1021</x>
-     <y>664</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>872</x>
-     <y>627</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonSaveDATA</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveGridDATA()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1021</x>
-     <y>693</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>864</x>
-     <y>656</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>MainWindow</sender>
-   <signal>changedGridWidth(QString)</signal>
-   <receiver>labelElvWidth</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>841</x>
-     <y>329</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1011</x>
-     <y>360</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>MainWindow</sender>
-   <signal>changedGridHeight(QString)</signal>
-   <receiver>labelElvHeight</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>844</x>
-     <y>521</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1011</x>
-     <y>379</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>MainWindow</sender>
-   <signal>changedGridPoints(QString)</signal>
-   <receiver>labelElvPoints</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>837</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1011</x>
-     <y>398</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>MainWindow</sender>
-   <signal>changedGridMB(QString)</signal>
-   <receiver>labelElvMB</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>841</x>
-     <y>383</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1011</x>
-     <y>417</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonCalcPointStats</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>computeRadialStats()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1011</x>
-     <y>605</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>874</x>
-     <y>303</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonCalcListStats</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>computeListStats()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1011</x>
-     <y>667</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>849</x>
-     <y>544</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkShowRegion</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>toggleShowRegion(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1021</x>
-     <y>89</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>850</x>
-     <y>86</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonCenterView</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>centerViewToRadialStats()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1011</x>
-     <y>250</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>846</x>
-     <y>516</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>spinSeaLevel</sender>
    <signal>valueChanged(double)</signal>
@@ -1839,22 +1590,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonClickPoint</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>selectPoint()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>933</x>
-     <y>268</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1037</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>glWidget</sender>
    <signal>pointSelected()</signal>
    <receiver>MainWindow</receiver>
@@ -1867,6 +1602,278 @@
     <hint type="destinationlabel">
      <x>1036</x>
      <y>307</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>changedGridWidth(QString)</signal>
+   <receiver>labelElvWidth</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>841</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1011</x>
+     <y>360</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCalcListStats</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>computeListStats()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1011</x>
+     <y>648</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>849</x>
+     <y>544</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>elvYmin</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setGridYmin(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>997</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>881</x>
+     <y>134</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>elvYmax</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setGridYmax(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>997</x>
+     <y>249</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>877</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>elvResolution</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setGridResolution(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>997</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>852</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonSavePLY</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveGridPLY()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>664</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>872</x>
+     <y>627</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonSaveDATA</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveGridDATA()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>693</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>864</x>
+     <y>656</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>elvXmin</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setGridXmin(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>997</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>854</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonSaveELV</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveGridELV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>861</x>
+     <y>595</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>elvXmax</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setGridXmax(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>997</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>858</x>
+     <y>194</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>changedGridHeight(QString)</signal>
+   <receiver>labelElvHeight</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>844</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1011</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>changedGridPoints(QString)</signal>
+   <receiver>labelElvPoints</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>837</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1011</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>changedGridMB(QString)</signal>
+   <receiver>labelElvMB</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>841</x>
+     <y>383</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1011</x>
+     <y>417</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCalcPointStats</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>computeRadialStats()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1011</x>
+     <y>586</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>874</x>
+     <y>303</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCenterView</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>centerViewToRadialStats()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1010</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>846</x>
+     <y>516</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkShowRegion</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>toggleShowRegion(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>89</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>850</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonClickPoint</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>930</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1037</x>
+     <y>237</y>
     </hint>
    </hints>
   </connection>
