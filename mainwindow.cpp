@@ -219,8 +219,8 @@ void MainWindow::computeRadialStats()
 
 void MainWindow::computeListStats()
 {
-    const unsigned int NUM_RADII = 5;
-    const float radii[NUM_RADII] = {100, 200, 1000, 5000, 25000};
+    const unsigned int NUM_RADII = 9;
+    const float radii[NUM_RADII] = {50, 100, 200, 500, 1000, 2000, 5000, 10000, 25000};
     float refRadius = ui->queryStatsRadMin->value();
     bool givenHeights = ui->checkListWithHeights->isChecked();
 

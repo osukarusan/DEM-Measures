@@ -95,8 +95,8 @@ void HeightsGrid::getRadialStatistics(const glm::vec2 &p, float rad, glm::vec3 &
 
 void HeightsGrid::getRadialStatistics(const glm::vec3 &p, float rad, glm::vec3 &hmin, glm::vec3 &hmax, float &hmean, float &hdev) const
 {
-    float hsum = 0;
-    float ssum = 0;
+    double hsum = 0;
+    double ssum = 0;
     int N = 0;
 
     glm::vec2 p_xy = glm::vec2(p);
@@ -110,7 +110,7 @@ void HeightsGrid::getRadialStatistics(const glm::vec3 &p, float rad, glm::vec3 &
         for (int j = ijMin.x; j < ijMax.y; j++) {
             glm::vec2 pij = gridMin + glm::vec2(i + 0.5f, j + 0.5f)*gridRes;
             if (glm::distance(pij, p_xy) <= rad && grid[i][j] >= 0) {
-                float h = grid[i][j];
+                double h = static_cast<double>(grid[i][j]);
                 if (h < hmin.z) {
                     hmin = glm::vec3(gridMin.x + i*gridRes.x, gridMin.y + j*gridRes.y, h);
                 }
@@ -124,8 +124,8 @@ void HeightsGrid::getRadialStatistics(const glm::vec3 &p, float rad, glm::vec3 &
         }
     }
 
-    hmean = hsum/float(N);
-    hdev = glm::sqrt((ssum - hsum*hsum/float(N))/float(N - 1));
+    hmean = float(hsum/double(N));
+    hdev = float(glm::sqrt((ssum - hsum*hsum/double(N))/double(N - 1)));
 }
 
 float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pIso)
