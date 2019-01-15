@@ -94,6 +94,7 @@ void MainWindow::saveGridELV()
         ui->tabWidget->setEnabled(false);
         checkGrid();
         glm::ivec2 gridPoints = grid->getGridSize();
+		float elevScale = ui->elvScaleFactor->value();
 
         this->ui->statusBar->showMessage("Desant ELV...");
         std::ofstream fout(filename.toStdString(), std::fstream::out | std::fstream::trunc | std::fstream::binary);
@@ -113,7 +114,7 @@ void MainWindow::saveGridELV()
 
         for (int y = 0; y < gridPoints.y; y++) {
             for (int x = 0; x < gridPoints.x; x++) {
-                write_short(fout, short(10*grid->data()[x][y] + 0.5));
+                write_short(fout, short(elevScale*grid->data()[x][y] + 0.5));
             }
         }
 
