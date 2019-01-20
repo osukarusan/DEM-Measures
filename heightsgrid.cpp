@@ -128,46 +128,49 @@ void HeightsGrid::getRadialStatistics(const glm::vec3 &p, float rad, glm::vec3 &
     hdev = float(glm::sqrt((ssum - hsum*hsum/double(N))/double(N - 1)));
 }
 
-float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pIso)
+float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pIso, float minIsoArea, float hOffset)
 {
     glm::ivec2 pcoords = glm::ivec2((p - gridMin)/gridRes);
     float ph = grid[pcoords.x][pcoords.y];
-    return getIsolation(glm::vec3(p.x, p.y, ph), minDist, pIso);
+    return getIsolation(glm::vec3(p.x, p.y, ph), minDist, pIso, minIsoArea, hOffset);
 }
 
-float HeightsGrid::getIsolation(const glm::vec3 &p, float minDist, glm::vec3 &pIso)
+float HeightsGrid::getIsolation(const glm::vec3 &p, float minDist, glm::vec3 &pIso, float minIsoArea, float hOffset)
 {
     glm::vec2 p_xy = glm::vec2(p);
     glm::ivec2 pcoords = glm::ivec2((p_xy - gridMin)/gridRes);
-    float ph = p.z;
+    float ph = p.z + hOffset;
     pIso = p;
+	float isoArea = 0;
 
     std::priority_queue<std::pair<float, std::pair<int,int> > > Q;
     std::vector<std::vector<bool> > Visited(gridSize.x, std::vector<bool>(gridSize.y, false));
     Q.push(std::make_pair(0.0f, std::make_pair(pcoords.x, pcoords.y)));
     while (!Q.empty()) {
         std::pair<float, std::pair<int, int> > qtop = Q.top(); Q.pop();
-        float pd = qtop.first;
         int pcx = qtop.second.first;
         int pcy = qtop.second.second;
         if (pcx >= 0 && pcy >= 0 && pcx < gridSize.x && pcy < gridSize.y && !Visited[pcx][pcy]) {
             Visited[pcx][pcy] = true;
-            glm::vec2 pij = gridMin + glm::vec2(pcx + 0.5f, pcy + 0.5f)*gridRes;
-            float d = glm::distance(pij, p_xy);
             float h = grid[pcx][pcy];
+			glm::vec2 pij = gridMin + glm::vec2(pcx + 0.5f, pcy + 0.5f)*gridRes;
+			float d = glm::distance(pij, p_xy);
             if (h > ph && d >= minDist) {
+				// keep the last isolation point found
                 pIso = glm::vec3(pij.x, pij.y, h);
-                break;
+				isoArea += gridRes.x * gridRes.y;
+				if (isoArea > minIsoArea)
+					break;
             }
 
-            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx - 1, pcy - 1)));
-            Q.push(std::make_pair(pd - 1,               std::make_pair(pcx - 1, pcy    )));
-            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx - 1, pcy + 1)));
-            Q.push(std::make_pair(pd - 1,               std::make_pair(pcx,     pcy - 1)));
-            Q.push(std::make_pair(pd - 1,               std::make_pair(pcx,     pcy + 1)));
-            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx + 1, pcy - 1)));
-            Q.push(std::make_pair(pd - 1,               std::make_pair(pcx + 1, pcy    )));
-            Q.push(std::make_pair(pd - std::sqrt(2.0f), std::make_pair(pcx + 1, pcy + 1)));
+            Q.push(std::make_pair(-d - std::sqrt(2.0f), std::make_pair(pcx - 1, pcy - 1)));
+            Q.push(std::make_pair(-d - 1,               std::make_pair(pcx - 1, pcy    )));
+            Q.push(std::make_pair(-d - std::sqrt(2.0f), std::make_pair(pcx - 1, pcy + 1)));
+            Q.push(std::make_pair(-d - 1,               std::make_pair(pcx,     pcy - 1)));
+            Q.push(std::make_pair(-d - 1,               std::make_pair(pcx,     pcy + 1)));
+            Q.push(std::make_pair(-d - std::sqrt(2.0f), std::make_pair(pcx + 1, pcy - 1)));
+            Q.push(std::make_pair(-d - 1,               std::make_pair(pcx + 1, pcy    )));
+            Q.push(std::make_pair(-d - std::sqrt(2.0f), std::make_pair(pcx + 1, pcy + 1)));
         }
     }
 

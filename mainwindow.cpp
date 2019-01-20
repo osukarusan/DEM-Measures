@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->elvYmax->setValue(gridMax.y);
     ui->elvResolution->setMinimum(glm::max(gridRes.x, gridRes.y));
     ui->elvResolution->setSingleStep(glm::max(gridRes.x, gridRes.y));
+	ui->queryIsolMinIsoArea->setSingleStep(gridRes.x*gridRes.y);
     emitUpdatedRegion();
 
     ui->viewX->setMinimum(gridMin.x);
@@ -38,8 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewY->setMinimum(gridMin.y);
     ui->viewY->setMaximum(gridMax.y);
     ui->viewRadius->setMaximum(glm::max(gridMax.x - gridMin.x, gridMax.y - gridMin.y));
-    ui->queryStatsX->setValue(0.5*(gridMin.x + gridMax.x));
-    ui->queryStatsY->setValue(0.5*(gridMin.y + gridMax.y));
+	ui->queryStatsX->setValue(0.5*(gridMin.x + gridMax.x));
+	ui->queryStatsY->setValue(0.5*(gridMin.y + gridMax.y));
+	ui->queryIsolX->setValue(0.5*(gridMin.x + gridMax.x));
+	ui->queryIsolY->setValue(0.5*(gridMin.y + gridMax.y));
 
     grid = nullptr;
     dirtyGrid = true;
@@ -179,6 +182,9 @@ void MainWindow::saveGridDATA()
     }
 }
 
+
+
+
 void MainWindow::computeRadialStats()
 {
     this->ui->tabWidget->setEnabled(false);
@@ -186,10 +192,8 @@ void MainWindow::computeRadialStats()
     this->ui->statusBar->showMessage("Carregant tiles...");
     glm::vec2 p(float(ui->queryStatsX->value()), float(ui->queryStatsY->value()));
     float rad = float(ui->queryStatsRad->value());
-    float refRadius = ui->queryStatsRadMin->value();
-    float gridRad = ui->queryStatsMaxGrid->value()*1000.0f;
-    glm::vec2 pmin = p - glm::vec2(gridRad, gridRad);
-    glm::vec2 pmax = p + glm::vec2(gridRad, gridRad);
+    glm::vec2 pmin = p - glm::vec2(rad, rad);
+    glm::vec2 pmax = p + glm::vec2(rad, rad);
 
     HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
 
@@ -197,8 +201,6 @@ void MainWindow::computeRadialStats()
     float hmean, hstdev;
     glm::vec3 hmin, hmax;
     gridArea->getRadialStatistics(p, rad, hmin, hmax, hmean, hstdev);
-    glm::vec3 pIso;
-    float dIso = gridArea->getIsolation(p, refRadius, pIso);
 
     QString txt;
     ui->lineQstatsResMinX->setText(txt.sprintf("%.1f", hmin.x));
@@ -209,21 +211,60 @@ void MainWindow::computeRadialStats()
     ui->lineQstatsResMax->setText(txt.sprintf("%.1f", hmax.z));
     ui->lineQstatsResMean->setText(txt.sprintf("%.1f", hmean));
     ui->lineQstatsResStdev->setText(txt.sprintf("%.1f", hstdev));
-    ui->lineQstatsResIsoDist->setText(txt.sprintf("%.1f", dIso));
-    ui->lineQstatsResIsoX->setText(txt.sprintf("%.1f", pIso.x));
-    ui->lineQstatsResIsoY->setText(txt.sprintf("%.1f", pIso.y));
 
     delete gridArea;
     this->ui->statusBar->showMessage("Completat!", 5000);
     this->ui->tabWidget->setEnabled(true);
 }
 
+
+void MainWindow::computePointIsolation()
+{
+	this->ui->tabWidget->setEnabled(false);
+
+	this->ui->statusBar->showMessage("Carregant tiles...");
+	glm::vec2 p(float(ui->queryIsolX->value()), float(ui->queryIsolY->value()));
+	float refRadius = ui->queryIsolRadSummit->value();
+	float minIsoArea = ui->queryIsolMinIsoArea->value();
+	float minHeightOff = ui->queryIsolMinHeightDiff->value();
+	float gridRad = ui->queryIsolMaxGrid->value()*1000.0f;
+	glm::vec2 pmin = p - glm::vec2(gridRad, gridRad);
+	glm::vec2 pmax = p + glm::vec2(gridRad, gridRad);
+
+	HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
+
+	this->ui->statusBar->showMessage("Calculant aïllament...");
+
+	// find peak
+	glm::vec3 hmin, hmax;
+	float hmean, hdev;
+	gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
+	glm::vec3 peak = hmax;
+
+	glm::vec3 pIso;
+	float dIso = gridArea->getIsolation(peak, refRadius, pIso, minIsoArea, minHeightOff);
+
+	QString txt;
+	ui->lineQisolResPeak->setText(txt.sprintf("%.1f", peak.z));
+	ui->lineQisolResPeakX->setText(txt.sprintf("%.1f", peak.x));
+	ui->lineQisolResPeakY->setText(txt.sprintf("%.1f", peak.y));
+	ui->lineQisolResIsoDist->setText(txt.sprintf("%.1f", dIso));
+	ui->lineQisolResIsoX->setText(txt.sprintf("%.1f", pIso.x));
+	ui->lineQisolResIsoY->setText(txt.sprintf("%.1f", pIso.y));
+
+	delete gridArea;
+	this->ui->statusBar->showMessage("Completat!", 5000);
+	this->ui->tabWidget->setEnabled(true);
+}
+
+
+
 void MainWindow::computeListStats()
 {
     const unsigned int NUM_RADII = 9;
     const float radii[NUM_RADII] = {50, 100, 200, 500, 1000, 2000, 5000, 10000, 25000};
-    float refRadius = ui->queryStatsRadMin->value();
-    bool givenHeights = ui->checkListWithHeights->isChecked();
+    float refRadius = ui->queryStatsRadSummit->value();
+    bool givenHeights = ui->checkListStatsWithHeights->isChecked();
 
     QString infile = QFileDialog::getOpenFileName(this, tr("Obrir llistat de punts"), QString(), tr("TXT (*.txt)"));
     if (!infile.isEmpty()) {
@@ -243,9 +284,10 @@ void MainWindow::computeListStats()
             for (unsigned int ri = 0; ri < NUM_RADII; ri++) {
                 fout << "Mitja " << radii[ri] << ", ";
                 fout << "Min " << radii[ri] << ", ";
-                fout << "Max " << radii[ri] << ", ";
+                fout << "Max " << radii[ri];
+				if (ri < NUM_RADII - 1) fout << ", ";
+				else                    fout << std::endl;
             }
-            fout << "Aillament" << std::endl;
             fout.setf(std::ios_base::fixed, std::ios_base::floatfield);
             fout.precision(0);
 
@@ -290,13 +332,10 @@ void MainWindow::computeListStats()
                     gridArea->getRadialStatistics(pref, radii[ri], hmin, hmax, hmean, hdev);
                     fout << hmean << ", ";
                     fout << hmin.z << ", ";
-                    fout << hmax.z << ", ";
+					fout << hmax.z;
+					if (ri < NUM_RADII - 1) fout << ", ";
+					else                    fout << std::endl;
                 }
-
-                // get isolation
-                glm::vec3 pIso;
-                float isolation = gridArea->getIsolation(pref, refRadius, pIso);
-                fout << isolation << std::endl;
 
                 delete gridArea;
                 pnum++;
@@ -310,18 +349,128 @@ void MainWindow::computeListStats()
     }
 }
 
+
+void MainWindow::computeListIsolation()
+{
+	const unsigned int NUM_HEIGHTS = 6;
+	const float heightOffsets[NUM_HEIGHTS] = { 0, 1, 5, 10, 15, 25 };
+	float refRadius = ui->queryIsolRadSummit->value();
+	float minIsoArea = ui->queryIsolMinIsoArea->value();
+	float gridRad = ui->queryIsolMaxGrid->value()*1000.0f;
+	bool givenHeights = ui->checkListIsolWithHeights->isChecked();
+
+	QString infile = QFileDialog::getOpenFileName(this, tr("Obrir llistat de punts"), QString(), tr("TXT (*.txt)"));
+	if (!infile.isEmpty()) {
+
+		QString filename = QFileDialog::getSaveFileName(this, tr("Desar mesures del llistat"), QString(), tr("CSV (*.csv)"));
+		if (!filename.isEmpty()) {
+			ui->tabWidget->setEnabled(false);
+
+			std::fstream fin(infile.toStdString(), std::fstream::in);
+			std::fstream fout(filename.toStdString(), std::fstream::out);
+
+			fout << "X" << ", ";
+			fout << "Y" << ", ";
+			fout << "X ref" << ", ";
+			fout << "Y ref" << ", ";
+			fout << "Altitud ref" << ", ";
+			fout << "Aillament" << ", ";
+			fout << "X aill" << ", ";
+			fout << "Y aill" << ", ";
+			for (unsigned int hi = 0; hi < NUM_HEIGHTS; hi++) {
+				fout << "Aillament net (+" << heightOffsets[hi] << "m), ";
+				fout << "X aill net (+" << heightOffsets[hi] << "m), ";
+				fout << "Y aill net (+" << heightOffsets[hi] << "m)";
+				if (hi < NUM_HEIGHTS-1) fout << ", ";
+				else                    fout << std::endl;
+			}
+
+			fout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+			fout.precision(0);
+
+			unsigned int pnum = 1;
+			std::string line;
+			while (std::getline(fin, line)) {
+				this->ui->statusBar->showMessage("Processant punt #" + QString::number(pnum) + "...");
+
+				std::istringstream iss(line);
+				float px, py, pz;
+				iss >> px >> py;
+				if (givenHeights) iss >> pz;
+
+				// load the grid search area
+				glm::vec2 p(px, py);
+				glm::vec2 pmin = p - glm::vec2(gridRad, gridRad);
+				glm::vec2 pmax = p + glm::vec2(gridRad, gridRad);
+				HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
+
+				// variables
+				glm::vec3 hmin, hmax;
+				glm::vec3 pref;
+				float hmean, hdev;
+
+				// get reference point
+				if (givenHeights) {
+					pref = glm::vec3(px, py, pz);
+				}
+				else {
+					gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
+					pref = hmax;
+				}
+				fout << px << ", ";
+				fout << py << ", ";
+				fout << pref.x << ", ";
+				fout << pref.y << ", ";
+				fout << pref.z << ", ";
+
+				// get isolation
+				glm::vec3 pIso;
+				float isolation = gridArea->getIsolation(pref, refRadius, pIso, 0, 0);
+				fout << isolation << ",";
+				fout << pIso.x << ", ";
+				fout << pIso.y << ", ";
+
+				// get clean isolations (TODO! do it in one query)
+				for (unsigned int hi = 0; hi < NUM_HEIGHTS; hi++) {
+					float cleanIso = gridArea->getIsolation(pref, refRadius, pIso, minIsoArea, heightOffsets[hi]);
+					fout << cleanIso << ",";
+					fout << pIso.x << ", ";
+					fout << pIso.y;
+					if (hi < NUM_HEIGHTS - 1) fout << ", ";
+					else                    fout << std::endl;
+				}
+
+				delete gridArea;
+				pnum++;
+			}
+
+			fout.close();
+			fin.close();
+			ui->tabWidget->setEnabled(true);
+			this->ui->statusBar->showMessage("Completat!", 5000);
+		}
+	}
+}
+
+
+
+
 void MainWindow::selectPoint()
 {
-    ui->buttonClickPoint->setEnabled(false);
+	ui->buttonClickPointStats->setEnabled(false);
+	ui->buttonCalcPointIsol->setEnabled(false);
     ui->glWidget->doSelectPoint();
 }
 
 void MainWindow::pointSelected()
 {
-    ui->buttonClickPoint->setEnabled(true);
+	ui->buttonClickPointStats->setEnabled(true);
+	ui->buttonCalcPointIsol->setEnabled(true);
     glm::vec2 p = ui->glWidget->getSelectedPoint();
-    ui->queryStatsX->setValue(p.x);
-    ui->queryStatsY->setValue(p.y);
+	ui->queryStatsX->setValue(p.x);
+	ui->queryStatsY->setValue(p.y);
+	ui->queryIsolX->setValue(p.x);
+	ui->queryIsolY->setValue(p.y);
 }
 
 void MainWindow::centerViewToRadialStats()
@@ -330,6 +479,14 @@ void MainWindow::centerViewToRadialStats()
     ui->viewY->setValue(ui->queryStatsY->value());
     ui->viewRadius->setValue(ui->queryStatsRad->value());
 }
+
+void MainWindow::centerViewToIsolation()
+{
+	ui->viewX->setValue(ui->queryIsolX->value());
+	ui->viewY->setValue(ui->queryIsolY->value());
+	ui->viewRadius->setValue(ui->queryIsolMaxGrid->value());
+}
+
 
 void MainWindow::toggleShowRegion(bool b)
 {

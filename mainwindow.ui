@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
+    <width>1199</width>
     <height>790</height>
    </rect>
   </property>
@@ -377,12 +377,12 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>300</width>
         <height>16777215</height>
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabMapa">
        <attribute name="title">
@@ -825,7 +825,7 @@
       </widget>
       <widget class="QWidget" name="tabMeasures">
        <attribute name="title">
-        <string>Mesures</string>
+        <string>Alçades</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
@@ -836,10 +836,91 @@
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <layout class="QGridLayout" name="gridLayout_6">
+             <item row="1" column="1">
+              <widget class="QDoubleSpinBox" name="queryStatsY">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>4488500.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>4748500.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>1000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="labelAuxM_7">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="labelAuxM_6">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="labelAuxM_8">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QDoubleSpinBox" name="queryStatsRad">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de càlcul dels valors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>10.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>50000.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>100.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>1000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="labelQstatsY">
                <property name="text">
                 <string>N (Y)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelQstatsRad">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de càlcul dels valors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string>Radi</string>
                </property>
               </widget>
              </item>
@@ -878,97 +959,28 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QDoubleSpinBox" name="queryStatsY">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="decimals">
-                <number>1</number>
-               </property>
-               <property name="minimum">
-                <double>4488500.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>4748500.000000000000000</double>
-               </property>
-               <property name="singleStep">
-                <double>1000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="labelAuxM_7">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="labelQstatsRad">
-               <property name="text">
-                <string>Radi</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="labelAuxM_6">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
+             <item row="2" column="2">
               <widget class="QLabel" name="labelAuxM_20">
                <property name="text">
                 <string>m</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QDoubleSpinBox" name="queryStatsRad">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="decimals">
-                <number>1</number>
-               </property>
-               <property name="minimum">
-                <double>10.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>50000.000000000000000</double>
-               </property>
-               <property name="singleStep">
-                <double>100.000000000000000</double>
-               </property>
-               <property name="value">
-                <double>1000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
+             <item row="2" column="0">
               <widget class="QLabel" name="labelQstatsRadMin">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi dins del qual cercar el punt de major alçada, que passarà a ser considerat la posició del cim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="text">
-                <string>Àrea cim</string>
+                <string>Cerca cim</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="labelAuxM_21">
-               <property name="text">
-                <string>km</string>
+             <item row="2" column="1">
+              <widget class="QDoubleSpinBox" name="queryStatsRadSummit">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi dins del qual cercar el punt de major alçada, que passarà a ser considerat la posició del cim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QDoubleSpinBox" name="queryStatsRadMin">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
@@ -992,60 +1004,37 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="labelQstatsMaxGrid">
-               <property name="text">
-                <string>Àrea cerca</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QDoubleSpinBox" name="queryStatsMaxGrid">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="decimals">
-                <number>1</number>
-               </property>
-               <property name="minimum">
-                <double>1.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>200.000000000000000</double>
-               </property>
-               <property name="singleStep">
-                <double>5.000000000000000</double>
-               </property>
-               <property name="value">
-                <double>5.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="labelAuxM_8">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="buttonCenterView">
+            <widget class="QPushButton" name="buttonCenterViewStats">
              <property name="text">
               <string>Centrar vista al punt</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="buttonClickPoint">
+            <widget class="QPushButton" name="buttonClickPointStats">
              <property name="text">
               <string>Seleccionar sobre la vista</string>
              </property>
             </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>10</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
             <widget class="Line" name="line_2">
@@ -1055,14 +1044,37 @@
             </widget>
            </item>
            <item>
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>10</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelQstatsResMin">
+             <item row="1" column="2">
+              <widget class="QLabel" name="labelAuxM_10">
                <property name="text">
-                <string>Minim</string>
+                <string>E</string>
                </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineQstatsResMinY">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -1073,6 +1085,16 @@
                </property>
                <property name="readOnly">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelQstatsResMin">
+               <property name="text">
+                <string>Minim</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -1093,40 +1115,6 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="labelAuxM_10">
-               <property name="text">
-                <string>E</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="lineQstatsResMinY">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="labelAuxM_11">
-               <property name="text">
-                <string>N</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="labelQstatsResMax">
-               <property name="text">
-                <string>Màxim</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="3" column="1">
               <widget class="QLineEdit" name="lineQstatsResMax">
                <property name="alignment">
@@ -1141,6 +1129,16 @@
               <widget class="QLabel" name="labelAuxM_13">
                <property name="text">
                 <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelQstatsResMax">
+               <property name="text">
+                <string>Màxim</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -1161,30 +1159,10 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
-              <widget class="QLineEdit" name="lineQstatsResMaxY">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
              <item row="5" column="2">
               <widget class="QLabel" name="labelAuxM_16">
                <property name="text">
                 <string>N</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="labelQstatsResMean">
-               <property name="text">
-                <string>Mitja</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
@@ -1202,6 +1180,33 @@
               <widget class="QLabel" name="labelAuxM_14">
                <property name="text">
                 <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="labelQstatsResMean">
+               <property name="text">
+                <string>Mitja</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="labelAuxM_11">
+               <property name="text">
+                <string>N</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="lineQstatsResMaxY">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -1232,96 +1237,12 @@
                </property>
               </widget>
              </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="labelQstatsResIso">
-               <property name="text">
-                <string>Aillament</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="1">
-              <widget class="QLineEdit" name="lineQstatsResIsoDist">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="2">
-              <widget class="QLabel" name="labelAuxM_17">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="QLineEdit" name="lineQstatsResIsoX">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="2">
-              <widget class="QLabel" name="labelAuxM_18">
-               <property name="text">
-                <string>E</string>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="1">
-              <widget class="QLineEdit" name="lineQstatsResIsoY">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="2">
-              <widget class="QLabel" name="labelAuxM_19">
-               <property name="text">
-                <string>N</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
            <item>
             <widget class="QPushButton" name="buttonCalcPointStats">
              <property name="text">
               <string>Calcular</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="title">
-           <string>Estadístiques per llista</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QCheckBox" name="checkListWithHeights">
-             <property name="text">
-              <string>Llistat amb alçades</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="buttonCalcListStats">
-             <property name="text">
-              <string>Carregar llistat...</string>
              </property>
             </widget>
            </item>
@@ -1341,7 +1262,535 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Estadístiques cims</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="checkListStatsWithHeights">
+             <property name="text">
+              <string>Llistat amb alçades</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonCalcListStats">
+             <property name="text">
+              <string>Carregar llistat...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tabIsolation">
+       <attribute name="title">
+        <string>Aïllament</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="title">
+           <string>Aïllament punt</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelQisolX">
+               <property name="text">
+                <string>E (X)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QDoubleSpinBox" name="queryIsolX">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>259500.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>527500.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>1000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="labelAuxM_27">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelQisolY">
+               <property name="text">
+                <string>N (Y)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDoubleSpinBox" name="queryIsolY">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>4488500.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>4748500.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>1000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="labelAuxM_28">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="labelQisolRadMin">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi dins del qual cercar el punt de major alçada, que passarà a ser considerat la posició del cim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string>Cerca cim</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDoubleSpinBox" name="queryIsolRadSummit">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi dins del qual cercar el punt de major alçada, que passarà a ser considerat la posició del cim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>10.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>1000.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>10.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>50.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="labelAuxM_30">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelQisolMinArea">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Àrea més alta que el cim que cal comptabilitzar abans de reportar la distància d'aïllament net.&lt;/p&gt;&lt;p&gt;Es té en compte totes les direccions i pot ser discontínua. Per a un valor de 0, coincideix amb l'aïllament clàssic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string>Àrea aïll. net</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QDoubleSpinBox" name="queryIsolMinIsoArea">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Àrea més alta que el cim que cal comptabilitzar abans de reportar la distància d'aïllament net.&lt;/p&gt;&lt;p&gt;Es té en compte totes les direccions i pot ser discontínua. Per a un valor de 0, coincideix amb l'aïllament clàssic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>0.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>10000.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>10.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="labelAuxM_31">
+               <property name="text">
+                <string>m2</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="labelQisolRadMin_2">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mínima diferència d'alçada per definir l'aïllament net.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string>Dif. alçada</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDoubleSpinBox" name="queryIsolMinHeightDiff">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mínima diferència d'alçada per definir l'aïllament net.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>0.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>50.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.500000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="labelAuxM_33">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="labelQisolMaxGrid">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Màxim aïllament, atura la cerca si no es troba l'aïllament dins d'aquesta distància.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string>Max aïll.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QDoubleSpinBox" name="queryIsolMaxGrid">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Màxim aïllament, atura la cerca si no es troba l'aïllament dins d'aquesta distància.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>1.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>200.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>5.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>5.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLabel" name="labelAuxM_32">
+               <property name="text">
+                <string>km</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonCenterViewIsol">
+             <property name="text">
+              <string>Centrar vista al punt</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonClickPointIsol">
+             <property name="text">
+              <string>Seleccionar sobre la vista</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>10</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="Line" name="line_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>10</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelQisolResIsol_2">
+               <property name="text">
+                <string>Cim</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineQisolResPeak">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="labelAuxM_45">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineQisolResPeakX">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="labelAuxM_46">
+               <property name="text">
+                <string>E</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineQisolResPeakY">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="labelAuxM_44">
+               <property name="text">
+                <string>N</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelQisolResIsol">
+               <property name="text">
+                <string>Dist</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="lineQisolResIsoDist">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="labelAuxM_41">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="lineQisolResIsoX">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="labelAuxM_42">
+               <property name="text">
+                <string>E</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="lineQisolResIsoY">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLabel" name="labelAuxM_43">
+               <property name="text">
+                <string>N</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonCalcPointIsol">
+             <property name="text">
+              <string>Calcular</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>142</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_8">
+          <property name="title">
+           <string>Aïllament cims</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <widget class="QCheckBox" name="checkListIsolWithHeights">
+             <property name="text">
+              <string>Llistat amb alçades</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonCalcListIsol">
+             <property name="text">
+              <string>Carregar llistat...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabORS">
+       <attribute name="title">
+        <string>ORS</string>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -1352,7 +1801,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1100</width>
+     <width>1199</width>
      <height>21</height>
     </rect>
    </property>
@@ -1660,8 +2109,8 @@
      <y>329</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1011</x>
-     <y>360</y>
+     <x>1166</x>
+     <y>419</y>
     </hint>
    </hints>
   </connection>
@@ -1672,8 +2121,8 @@
    <slot>computeListStats()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1011</x>
-     <y>648</y>
+     <x>1166</x>
+     <y>737</y>
     </hint>
     <hint type="destinationlabel">
      <x>849</x>
@@ -1688,7 +2137,7 @@
    <slot>setGridYmin(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>997</x>
+     <x>1152</x>
      <y>164</y>
     </hint>
     <hint type="destinationlabel">
@@ -1704,7 +2153,7 @@
    <slot>setGridYmax(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>997</x>
+     <x>1152</x>
      <y>249</y>
     </hint>
     <hint type="destinationlabel">
@@ -1736,8 +2185,8 @@
    <slot>saveGridPLY()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1021</x>
-     <y>664</y>
+     <x>1176</x>
+     <y>718</y>
     </hint>
     <hint type="destinationlabel">
      <x>872</x>
@@ -1752,8 +2201,8 @@
    <slot>saveGridDATA()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1021</x>
-     <y>693</y>
+     <x>1176</x>
+     <y>747</y>
     </hint>
     <hint type="destinationlabel">
      <x>864</x>
@@ -1768,7 +2217,7 @@
    <slot>setGridXmin(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>997</x>
+     <x>1152</x>
      <y>138</y>
     </hint>
     <hint type="destinationlabel">
@@ -1784,8 +2233,8 @@
    <slot>saveGridELV()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1021</x>
-     <y>635</y>
+     <x>1176</x>
+     <y>689</y>
     </hint>
     <hint type="destinationlabel">
      <x>861</x>
@@ -1800,7 +2249,7 @@
    <slot>setGridXmax(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>997</x>
+     <x>1152</x>
      <y>223</y>
     </hint>
     <hint type="destinationlabel">
@@ -1820,8 +2269,8 @@
      <y>521</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1011</x>
-     <y>379</y>
+     <x>1166</x>
+     <y>438</y>
     </hint>
    </hints>
   </connection>
@@ -1836,8 +2285,8 @@
      <y>353</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1011</x>
-     <y>398</y>
+     <x>1166</x>
+     <y>457</y>
     </hint>
    </hints>
   </connection>
@@ -1852,8 +2301,8 @@
      <y>383</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1011</x>
-     <y>417</y>
+     <x>1166</x>
+     <y>476</y>
     </hint>
    </hints>
   </connection>
@@ -1864,8 +2313,8 @@
    <slot>computeRadialStats()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1011</x>
-     <y>586</y>
+     <x>1166</x>
+     <y>501</y>
     </hint>
     <hint type="destinationlabel">
      <x>874</x>
@@ -1874,14 +2323,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonCenterView</sender>
+   <sender>buttonCenterViewStats</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>centerViewToRadialStats()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1010</x>
-     <y>277</y>
+     <x>1166</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>846</x>
@@ -1906,18 +2355,82 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonClickPoint</sender>
+   <sender>buttonClickPointStats</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>selectPoint()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>930</x>
-     <y>277</y>
+     <x>1166</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>1037</x>
      <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonClickPointIsol</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1072</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>394</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCalcListIsol</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>computeListIsolation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1072</x>
+     <y>726</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>394</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCalcPointIsol</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>computePointIsolation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1072</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>394</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonCenterViewIsol</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>centerViewToIsolation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1072</x>
+     <y>265</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>394</y>
     </hint>
    </hints>
   </connection>
@@ -1943,5 +2456,8 @@
   <slot>centerViewToRadialStats()</slot>
   <slot>selectPoint()</slot>
   <slot>pointSelected()</slot>
+  <slot>centerViewToIsolation()</slot>
+  <slot>computePointIsolation()</slot>
+  <slot>computeListIsolation()</slot>
  </slots>
 </ui>

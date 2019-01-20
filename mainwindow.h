@@ -30,14 +30,21 @@ public slots:
     void saveGridPLY();
     void saveGridDATA();
 
-    // queries
-    void computeRadialStats();
-    void computeListStats();
-    void selectPoint();
-    void pointSelected();
+    // height radial stats
+	void computeRadialStats();
+	void computeListStats();
+
+	// isolations
+	void computePointIsolation();
+	void computeListIsolation();
+
+	// point selection (for stats and isol)
+	void selectPoint();
+	void pointSelected();
+	void centerViewToRadialStats();
+	void centerViewToIsolation();
 
     // render
-    void centerViewToRadialStats();
     void toggleShowRegion(bool);
     void setSeaLevel(double);
     void setSeaLevel(int);
