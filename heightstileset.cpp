@@ -106,7 +106,7 @@ HeightsGrid* HeightsTileset::loadRegion(const glm::vec2& dtmMin, const glm::vec2
     glm::ivec2 numPoints = glm::ivec2(glm::ceil((regionMax - regionMin)/outRes));
     glm::ivec2 outPPtile = ppTile/reduceFactor;
 
-    std::vector<std::vector<float> > H(numPoints.x+1, std::vector<float>(numPoints.y+1, hNoValue));
+    std::vector<std::vector<float> > H(numPoints.x, std::vector<float>(numPoints.y, hNoValue));
 
     for (int ti = tileIni.x; ti <= tileEnd.x; ti++) {
         for (int tj = tileIni.y; tj <= tileEnd.y; tj++) {
@@ -117,7 +117,7 @@ HeightsGrid* HeightsTileset::loadRegion(const glm::vec2& dtmMin, const glm::vec2
             for (int ii = 0; ii < outPPtile.x; ii++) {
                 for (int jj = 0; jj < outPPtile.y; jj++) {
                     glm::vec2 p = tmin + glm::vec2(float(jj), float(outPPtile.x - 1 - ii))*outRes;
-                    if (p.x >= regionMin.x && p.x <= regionMax.x && p.y >= regionMin.y && p.y <= regionMax.y) {
+                    if (p.x >= regionMin.x && p.x < regionMax.x && p.y >= regionMin.y && p.y < regionMax.y) {
                         glm::ivec2 coords = glm::ivec2(glm::floor((p - regionMin)/outRes));
                         glm::clamp(coords, glm::ivec2(0,0), glm::ivec2(numPoints.x, numPoints.y));
                         H[coords.x][coords.y] = T[ii][jj];

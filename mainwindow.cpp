@@ -41,8 +41,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewRadius->setMaximum(glm::max(gridMax.x - gridMin.x, gridMax.y - gridMin.y));
 	ui->queryStatsX->setValue(0.5*(gridMin.x + gridMax.x));
 	ui->queryStatsY->setValue(0.5*(gridMin.y + gridMax.y));
+	ui->queryStatsX->setMinimum(gridMin.x);
+	ui->queryStatsX->setMaximum(gridMax.x);
+	ui->queryStatsY->setMinimum(gridMin.y);
+	ui->queryStatsY->setMaximum(gridMax.y);
 	ui->queryIsolX->setValue(0.5*(gridMin.x + gridMax.x));
 	ui->queryIsolY->setValue(0.5*(gridMin.y + gridMax.y));
+	ui->queryIsolX->setMinimum(gridMin.x);
+	ui->queryIsolX->setMaximum(gridMax.x);
+	ui->queryIsolY->setMinimum(gridMin.y);
+	ui->queryIsolY->setMaximum(gridMax.y);
 
     grid = nullptr;
     dirtyGrid = true;
@@ -169,8 +177,8 @@ void MainWindow::saveGridDATA()
         this->ui->statusBar->showMessage("Desant DATA...");
         std::ofstream fout(filename.toStdString(), std::fstream::out | std::fstream::trunc);
         for (int y = 0; y < gridPoints.y; y++) {
-            fout << grid->data()[0][y];
-            for (int x = 0; x < gridPoints.x; x++) {
+            fout << grid->data()[0][gridPoints.y - 1 - y];
+            for (int x = 1; x < gridPoints.x; x++) {
                 fout << " " << grid->data()[x][gridPoints.y - 1 - y];
             }
             fout << std::endl;
