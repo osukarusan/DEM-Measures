@@ -128,14 +128,14 @@ void HeightsGrid::getRadialStatistics(const glm::vec3 &p, float rad, glm::vec3 &
     hdev = float(glm::sqrt((ssum - hsum*hsum/double(N))/double(N - 1)));
 }
 
-float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pIso, float minIsoArea, float hOffset)
+float HeightsGrid::getIsolation(const glm::vec2 &p, float minDist, glm::vec3 &pIso, float minIsoArea, float hOffset) const
 {
     glm::ivec2 pcoords = glm::ivec2((p - gridMin)/gridRes);
     float ph = grid[pcoords.x][pcoords.y];
     return getIsolation(glm::vec3(p.x, p.y, ph), minDist, pIso, minIsoArea, hOffset);
 }
 
-float HeightsGrid::getIsolation(const glm::vec3 &p, float minDist, glm::vec3 &pIso, float minIsoArea, float hOffset)
+float HeightsGrid::getIsolation(const glm::vec3 &p, float minDist, glm::vec3 &pIso, float minIsoArea, float hOffset) const
 {
     glm::vec2 p_xy = glm::vec2(p);
     glm::ivec2 pcoords = glm::ivec2((p_xy - gridMin)/gridRes);
@@ -177,4 +177,57 @@ float HeightsGrid::getIsolation(const glm::vec3 &p, float minDist, glm::vec3 &pI
     float dres = glm::distance(p_xy, glm::vec2(pIso));
     if (dres > minDist) return dres;
     else                return -1;
+}
+
+float HeightsGrid::getORS(const glm::vec2 &p, float radius) const
+{
+	glm::ivec2 pcoords = glm::ivec2((p - gridMin) / gridRes);
+	float ph = grid[pcoords.x][pcoords.y];
+	return getORS(glm::vec3(p.x, p.y, ph), radius);
+}
+
+
+inline double slopeNormalization(double u) {
+	double atanu = atan(u);
+	return (4.0 / pow(M_PI, 3))*(2*u*atanu - log(u*u + 1) - atanu*atanu);
+}
+
+float HeightsGrid::getORS(const glm::vec3 &p, float radius) const
+{
+
+
+	glm::vec2 p_xy = glm::vec2(p);
+	double    h0 = p.z;
+	glm::ivec2 pcoords = glm::ivec2((p_xy - gridMin) / gridRes);
+	glm::ivec2 radOff = glm::ivec2(glm::ceil(glm::vec2(radius) / gridRes));
+	glm::ivec2 ijMin = glm::max(pcoords - radOff, glm::ivec2(0));
+	glm::ivec2 ijMax = glm::min(pcoords + radOff, gridSize);
+
+	double dA = gridSize.x * gridSize.y;
+	double intSum = 0;
+	double areaSum = 0;
+
+	for (int i = ijMin.x; i < ijMax.x; i++) {
+		for (int j = ijMin.x; j < ijMax.y; j++) { 
+			glm::vec2 pij = gridMin + glm::vec2(i + 0.5f, j + 0.5f)*gridRes;
+			float pdist = glm::distance(pij, p_xy);
+			if (pdist <= radius && grid[i][j] >= 0) {
+				double h = static_cast<double>(grid[i][j]);
+
+				// higher ground does not contribute
+				if (h <= h0) {
+					double y = h0 - h;
+					double r = pdist;
+					double f2 = slopeNormalization(y / r);
+					intSum += f2*dA;
+				}
+
+				areaSum += dA;
+			}
+		}
+	}
+	
+	double ors = sqrt((intSum/areaSum)/(2.0*M_PI));
+
+	return float(ors);
 }
