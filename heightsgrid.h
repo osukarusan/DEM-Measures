@@ -25,12 +25,14 @@ public:
 
     float getHeightMin();
     float getHeightMax();
-    void getRadialStatistics(const glm::vec2& p, float rad, glm::vec3& hmin, glm::vec3& hmax, float& hmean, float& hdev) const;
-    void getRadialStatistics(const glm::vec3& p, float rad, glm::vec3& hmin, glm::vec3& hmax, float& hmean, float& hdev) const;
-    float getIsolation(const glm::vec2& p, float minDist, glm::vec3& pIso, float minIsoArea = 0, float hOffset = 0) const;
-    float getIsolation(const glm::vec3& p, float minDist, glm::vec3& pIso, float minIsoArea = 0, float hOffset = 0) const;
-	float getORS(const glm::vec2& p, float radius) const;
-	float getORS(const glm::vec3& p, float radius) const;
+	float getHeight(const glm::vec2& p) const;
+
+    void  computeRadialStatistics(const glm::vec2& p, float rad, glm::vec3& hmin, glm::vec3& hmax, float& hmean, float& hdev) const;
+    void  computeRadialStatistics(const glm::vec3& p, float rad, glm::vec3& hmin, glm::vec3& hmax, float& hmean, float& hdev) const;
+    float computeIsolation(const glm::vec2& p, float minDist, glm::vec3& pIso, float minIsoArea = 0, float hOffset = 0) const;
+    float computeIsolation(const glm::vec3& p, float minDist, glm::vec3& pIso, float minIsoArea = 0, float hOffset = 0) const;
+	float computeORS(const glm::vec2& p, float radius) const;
+	float computeORS(const glm::vec3& p, float radius) const;
 
 private:
     std::vector<std::vector<float> > grid;

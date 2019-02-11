@@ -38,11 +38,18 @@ public slots:
 	void computePointIsolation();
 	void computeListIsolation();
 
-	// point selection (for stats and isol)
+	// ORS
+	void computePointORS();
+	void computeRegionORS();
+	void computeListORS();
+	void exportRegionORS();
+
+	// point selection
 	void selectPoint();
 	void pointSelected();
 	void centerViewToRadialStats();
 	void centerViewToIsolation();
+	void centerViewToORS();
 
     // render
     void toggleShowRegion(bool);

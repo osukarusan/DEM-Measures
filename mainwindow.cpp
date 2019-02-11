@@ -51,6 +51,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->queryIsolX->setMaximum(gridMax.x);
 	ui->queryIsolY->setMinimum(gridMin.y);
 	ui->queryIsolY->setMaximum(gridMax.y);
+	ui->queryOrsX->setValue(0.5*(gridMin.x + gridMax.x));
+	ui->queryOrsY->setValue(0.5*(gridMin.y + gridMax.y));
+	ui->queryOrsX->setMinimum(gridMin.x);
+	ui->queryOrsX->setMaximum(gridMax.x);
+	ui->queryOrsY->setMinimum(gridMin.y);
+	ui->queryOrsY->setMaximum(gridMax.y);
 
     grid = nullptr;
     dirtyGrid = true;
@@ -208,7 +214,7 @@ void MainWindow::computeRadialStats()
     this->ui->statusBar->showMessage("Calculant estadístiques...");
     float hmean, hstdev;
     glm::vec3 hmin, hmax;
-    gridArea->getRadialStatistics(p, rad, hmin, hmax, hmean, hstdev);
+    gridArea->computeRadialStatistics(p, rad, hmin, hmax, hmean, hstdev);
 
     QString txt;
     ui->lineQstatsResMinX->setText(txt.sprintf("%.1f", hmin.x));
@@ -246,11 +252,11 @@ void MainWindow::computePointIsolation()
 	// find peak
 	glm::vec3 hmin, hmax;
 	float hmean, hdev;
-	gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
+	gridArea->computeRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
 	glm::vec3 peak = hmax;
 
 	glm::vec3 pIso;
-	float dIso = gridArea->getIsolation(peak, refRadius, pIso, minIsoArea, minHeightOff);
+	float dIso = gridArea->computeIsolation(peak, refRadius, pIso, minIsoArea, minHeightOff);
 
 	QString txt;
 	ui->lineQisolResPeak->setText(txt.sprintf("%.1f", peak.z));
@@ -265,6 +271,40 @@ void MainWindow::computePointIsolation()
 	this->ui->tabWidget->setEnabled(true);
 }
 
+
+void MainWindow::computePointORS()
+{
+	this->ui->tabWidget->setEnabled(false);
+
+	this->ui->statusBar->showMessage("Carregant tiles...");
+	glm::vec2 p(float(ui->queryOrsX->value()), float(ui->queryOrsY->value()));
+	float gridRad = ui->queryOrsRad->value();
+	glm::vec2 pmin = p - glm::vec2(gridRad, gridRad);
+	glm::vec2 pmax = p + glm::vec2(gridRad, gridRad);
+
+	HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
+
+	this->ui->statusBar->showMessage("Calculant ORS...");
+
+	float ors = gridArea->computeORS(p, gridRad);
+
+	QString txt;
+	ui->lineQorsValue->setText(txt.sprintf("%.2f", ors));
+
+	delete gridArea;
+	this->ui->statusBar->showMessage("Completat!", 5000);
+	this->ui->tabWidget->setEnabled(true);
+}
+
+void MainWindow::computeRegionORS()
+{
+
+}
+
+void MainWindow::exportRegionORS()
+{
+
+}
 
 
 void MainWindow::computeListStats()
@@ -326,7 +366,7 @@ void MainWindow::computeListStats()
                     pref = glm::vec3(px, py, pz);
                 }
                 else {
-                    gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
+                    gridArea->computeRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
                     pref = hmax;
                 }
                 fout << px << ", ";
@@ -337,7 +377,7 @@ void MainWindow::computeListStats()
 
                 // get radial queries
                 for (unsigned int ri = 0; ri < NUM_RADII; ri++) {
-                    gridArea->getRadialStatistics(pref, radii[ri], hmin, hmax, hmean, hdev);
+                    gridArea->computeRadialStatistics(pref, radii[ri], hmin, hmax, hmean, hdev);
                     fout << hmean << ", ";
                     fout << hmin.z << ", ";
 					fout << hmax.z;
@@ -422,7 +462,7 @@ void MainWindow::computeListIsolation()
 					pref = glm::vec3(px, py, pz);
 				}
 				else {
-					gridArea->getRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
+					gridArea->computeRadialStatistics(p, refRadius, hmin, hmax, hmean, hdev);
 					pref = hmax;
 				}
 				fout << px << ", ";
@@ -433,14 +473,14 @@ void MainWindow::computeListIsolation()
 
 				// get isolation
 				glm::vec3 pIso;
-				float isolation = gridArea->getIsolation(pref, refRadius, pIso, 0, 0);
+				float isolation = gridArea->computeIsolation(pref, refRadius, pIso, 0, 0);
 				fout << isolation << ",";
 				fout << pIso.x << ", ";
 				fout << pIso.y << ", ";
 
 				// get clean isolations (TODO! do it in one query)
 				for (unsigned int hi = 0; hi < NUM_HEIGHTS; hi++) {
-					float cleanIso = gridArea->getIsolation(pref, refRadius, pIso, minIsoArea, heightOffsets[hi]);
+					float cleanIso = gridArea->computeIsolation(pref, refRadius, pIso, minIsoArea, heightOffsets[hi]);
 					fout << cleanIso << ",";
 					fout << pIso.x << ", ";
 					fout << pIso.y;
@@ -461,6 +501,79 @@ void MainWindow::computeListIsolation()
 }
 
 
+void MainWindow::computeListORS()
+{
+	float refRadius = ui->queryOrsRad->value();
+	bool givenHeights = ui->checkListStatsWithHeights->isChecked();
+
+	QString infile = QFileDialog::getOpenFileName(this, tr("Obrir llistat de punts"), QString(), tr("TXT (*.txt)"));
+	if (!infile.isEmpty()) {
+
+		QString filename = QFileDialog::getSaveFileName(this, tr("Desar mesures del llistat"), QString(), tr("CSV (*.csv)"));
+		if (!filename.isEmpty()) {
+			ui->tabWidget->setEnabled(false);
+
+			std::fstream fin(infile.toStdString(), std::fstream::in);
+			std::fstream fout(filename.toStdString(), std::fstream::out);
+
+			fout << "X" << ", ";
+			fout << "Y" << ", ";
+			fout << "X ref" << ", ";
+			fout << "Y ref" << ", ";
+			fout << "Altitud" << ", ";
+			fout << "ORS" << std::endl;
+
+			fout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+			fout.precision(0);
+
+			unsigned int pnum = 1;
+			std::string line;
+			while (std::getline(fin, line)) {
+				this->ui->statusBar->showMessage("Processant punt #" + QString::number(pnum) + "...");
+
+				std::istringstream iss(line);
+				float px, py, pz;
+				iss >> px >> py;
+				if (givenHeights) iss >> pz;
+
+				// load the biggest area (last radius assuming they are ordered)
+				float rad = refRadius;
+				glm::vec2 p(px, py);
+				glm::vec2 pmin = p - glm::vec2(rad, rad);
+				glm::vec2 pmax = p + glm::vec2(rad, rad);
+				HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
+
+				// variables
+				glm::vec3 pref;
+
+				// get reference point
+				if (givenHeights) {
+					pref = glm::vec3(px, py, pz);
+				}
+				else {					
+					pref = glm::vec3(px, py, gridArea->getHeight(p));
+				}
+				fout << px << ", ";
+				fout << py << ", ";
+				fout << pref.x << ", ";
+				fout << pref.y << ", ";
+				fout << pref.z << ", ";
+
+				// get ors
+				float ors = gridArea->computeORS(pref, rad);
+				fout << ors << std::endl;
+
+				delete gridArea;
+				pnum++;
+			}
+
+			fout.close();
+			fin.close();
+			ui->tabWidget->setEnabled(true);
+			this->ui->statusBar->showMessage("Completat!", 5000);
+		}
+	}
+}
 
 
 void MainWindow::selectPoint()
@@ -479,6 +592,8 @@ void MainWindow::pointSelected()
 	ui->queryStatsY->setValue(p.y);
 	ui->queryIsolX->setValue(p.x);
 	ui->queryIsolY->setValue(p.y);
+	ui->queryOrsX->setValue(p.x);
+	ui->queryOrsY->setValue(p.y);
 }
 
 void MainWindow::centerViewToRadialStats()
@@ -493,6 +608,13 @@ void MainWindow::centerViewToIsolation()
 	ui->viewX->setValue(ui->queryIsolX->value());
 	ui->viewY->setValue(ui->queryIsolY->value());
 	ui->viewRadius->setValue(ui->queryIsolMaxGrid->value());
+}
+
+void MainWindow::centerViewToORS()
+{
+	ui->viewX->setValue(ui->queryOrsX->value());
+	ui->viewY->setValue(ui->queryOrsY->value());
+	ui->viewRadius->setValue(ui->queryOrsRad->value());
 }
 
 
