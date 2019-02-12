@@ -13,6 +13,8 @@ TerrainViewer::TerrainViewer(QWidget *parent) : QOpenGLWidget(parent)
     bufPos = bufIndex = texPaletteColor = 0;
     numPoints = numTriangles = 0;
     interaction = NONE;
+	seaLevel = 0;
+	selectedPoint = glm::vec2(0);
 }
 
 TerrainViewer::~TerrainViewer()

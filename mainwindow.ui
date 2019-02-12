@@ -2009,88 +2009,7 @@
            </item>
            <item>
             <layout class="QGridLayout" name="gridLayout_11">
-             <item row="1" column="2">
-              <widget class="QLabel" name="labelAuxM_21">
-               <property name="text">
-                <string>E</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="lineQorsResMinY">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="lineQorsResMin">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelQorsResMin">
-               <property name="text">
-                <string>Minim</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="labelAuxM_26">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="lineQorsResMinX">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="lineQorsResMax">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="labelAuxM_29">
-               <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="labelQorsResMax">
-               <property name="text">
-                <string>Màxim</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
               <widget class="QLineEdit" name="lineQorsResMaxX">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2100,22 +2019,8 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="labelAuxM_34">
-               <property name="text">
-                <string>E</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="2">
-              <widget class="QLabel" name="labelAuxM_35">
-               <property name="text">
-                <string>N</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QLineEdit" name="lineQorsResMean">
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineQorsResMax">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
@@ -2124,17 +2029,10 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="2">
-              <widget class="QLabel" name="labelAuxM_36">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelQorsResMax">
                <property name="text">
-                <string>m</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="labelQorsResMean">
-               <property name="text">
-                <string>Mitja</string>
+                <string>Màxim</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2142,13 +2040,20 @@
               </widget>
              </item>
              <item row="2" column="2">
-              <widget class="QLabel" name="labelAuxM_37">
+              <widget class="QLabel" name="labelAuxM_35">
                <property name="text">
                 <string>N</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
+             <item row="3" column="2">
+              <widget class="QLabel" name="labelAuxM_36">
+               <property name="text">
+                <string>m</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
               <widget class="QLineEdit" name="lineQorsResMaxY">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2158,18 +2063,15 @@
                </property>
               </widget>
              </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="labelQorsResStdev">
+             <item row="0" column="2">
+              <widget class="QLabel" name="labelAuxM_29">
                <property name="text">
-                <string>Desv</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <string>m</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="1">
-              <widget class="QLineEdit" name="lineQorsResStdev">
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="lineQorsResMean">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
@@ -2178,10 +2080,20 @@
                </property>
               </widget>
              </item>
-             <item row="7" column="2">
-              <widget class="QLabel" name="labelAuxM_38">
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelQorsResMean">
                <property name="text">
-                <string>m</string>
+                <string>Mitja</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="labelAuxM_34">
+               <property name="text">
+                <string>E</string>
                </property>
               </widget>
              </item>

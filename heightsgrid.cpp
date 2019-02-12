@@ -113,7 +113,7 @@ void HeightsGrid::computeRadialStatistics(const glm::vec3 &p, float rad, glm::ve
     hmin = hmax = p;
 
     for (int i = ijMin.x; i < ijMax.x; i++) {
-        for (int j = ijMin.x; j < ijMax.y; j++) {
+        for (int j = ijMin.y; j < ijMax.y; j++) {
             glm::vec2 pij = gridMin + glm::vec2(i + 0.5f, j + 0.5f)*gridRes;
             if (glm::distance(pij, p_xy) <= rad && grid[i][j] >= 0) {
                 double h = static_cast<double>(grid[i][j]);
@@ -210,17 +210,17 @@ float HeightsGrid::computeORS(const glm::vec3 &p, float radius) const
 	double dA = gridRes.x * gridRes.y;
 	double integral = 0;
 	for (int i = ijMin.x; i < ijMax.x; i++) {
-		for (int j = ijMin.x; j < ijMax.y; j++) { 
+		for (int j = ijMin.y; j < ijMax.y; j++) { 
 			glm::vec2 pij = gridMin + glm::vec2(i + 0.5f, j + 0.5f)*gridRes;
 			float pdist = glm::distance(pij, p_xy);
-			if (pdist <= radius && grid[i][j] >= 0) {
+			if (pdist <= radius && pdist > 0.1*gridRes.x && grid[i][j] >= gridNoValue) {
 				double h = static_cast<double>(grid[i][j]);
 				// higher ground does not contribute
 				if (h <= h0) {
 					double y = h0 - h;
 					double r = pdist;
 					double f2 = slopeNormalization(y / r);
-					integral += f2*dA;
+					integral += glm::max(f2*dA, 0.0);
 				}
 			}
 		}

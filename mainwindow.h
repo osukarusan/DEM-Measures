@@ -75,6 +75,7 @@ private:
     glm::vec2 gridMin, gridMax, gridRes;
     bool dirtyGrid;
 
+	std::vector<std::vector<float> > orsGrid;
 };
 
 #endif // MAINWINDOW_H

@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->queryOrsY->setMinimum(gridMin.y);
 	ui->queryOrsY->setMaximum(gridMax.y);
 
+	ui->buttonExportRegionORS->setEnabled(false);
+
     grid = nullptr;
     dirtyGrid = true;
 }
@@ -298,12 +300,82 @@ void MainWindow::computePointORS()
 
 void MainWindow::computeRegionORS()
 {
+	float rad = ui->queryOrsRad->value();
+	glm::vec2 pmin = glm::max(gridMin - glm::vec2(rad), tileset->getTilesetMin());
+	glm::vec2 pmax = glm::min(gridMax + glm::vec2(rad), tileset->getTilesetMax());
+	glm::ivec2 gridPoints = glm::ivec2(glm::ceil((gridMax - gridMin) / gridRes));
+	if (gridPoints.x * gridPoints.y > 1000000000) {
+		this->ui->statusBar->showMessage("ERROR: Regió massa gran per al càlcul d'ORS!");
+		return;
+	}
 
+	this->ui->tabWidget->setEnabled(false);
+
+	this->ui->statusBar->showMessage("Carregant tiles...");
+	HeightsGrid* gridArea = tileset->loadRegion(pmin, pmax, tileset->getTileRes());
+
+	QString txt;
+	this->ui->statusBar->showMessage("Calculant ORS...");
+
+
+	float maxOrs = 0;
+	glm::vec2  pmaxOrs;
+	float orsSum = 0;	
+	orsGrid = std::vector<std::vector<float> >(gridPoints.x, std::vector<float>(gridPoints.y, 0));
+
+	for (int i = 0; i < gridPoints.x; i++) {
+		for (int j = 0; j < gridPoints.y; j++) {
+			this->ui->statusBar->showMessage(txt.sprintf("Calculant ORS... %d de %d (%.1f%%)", 
+				i*gridPoints.y + j + 1, gridPoints.x*gridPoints.y,  100*(i*gridPoints.y + j + 1)/float(gridPoints.x*gridPoints.y)));
+
+			glm::vec2 p = gridMin + glm::vec2(i + 0.5, j + 0.5)*gridRes + glm::vec2(rad);
+			
+			float ors = gridArea->computeORS(p, rad);
+			orsGrid[i][j] = ors;
+
+			orsSum += ors;
+			if (ors > maxOrs) {
+				maxOrs = ors;
+				pmaxOrs = p;
+			}
+		}
+	}
+
+	float orsMean = orsSum / float(gridPoints.x * gridPoints.y);
+	ui->lineQorsResMax->setText(txt.sprintf("%.2f", maxOrs));
+	ui->lineQorsResMaxX->setText(txt.sprintf("%.1f", pmaxOrs.x));
+	ui->lineQorsResMaxY->setText(txt.sprintf("%.1f", pmaxOrs.y));
+	ui->lineQorsResMean->setText(txt.sprintf("%.2f", orsMean));
+
+	delete gridArea;
+	this->ui->statusBar->showMessage("Completat!", 5000);
+	this->ui->tabWidget->setEnabled(true);
+	this->ui->buttonExportRegionORS->setEnabled(true);
 }
 
 void MainWindow::exportRegionORS()
 {
+	QString filename = QFileDialog::getSaveFileName(this, tr("Desar ORS com a matriu"), QString(), tr("DATA (*.data)"));
+	if (!filename.isEmpty()) {
+		ui->tabWidget->setEnabled(false);
 
+		checkGrid();
+		glm::ivec2 gridPoints = glm::vec2(orsGrid.size(), orsGrid[0].size());
+
+		this->ui->statusBar->showMessage("Desant ORS...");
+		std::ofstream fout(filename.toStdString(), std::fstream::out | std::fstream::trunc);
+		for (int y = 0; y < gridPoints.y; y++) {
+			fout << orsGrid[0][gridPoints.y - 1 - y];
+			for (int x = 1; x < gridPoints.x; x++) {
+				fout << " " << orsGrid[x][gridPoints.y - 1 - y];
+			}
+			fout << std::endl;
+		}
+		fout.close();
+
+		this->ui->statusBar->showMessage("Completat!", 5000);
+		ui->tabWidget->setEnabled(true);
+	}
 }
 
 
@@ -668,4 +740,5 @@ void MainWindow::emitUpdatedRegion()
     }
 
     ui->glWidget->setRegion(gridMin, gridMax);
+	ui->buttonExportRegionORS->setEnabled(false);
 }
